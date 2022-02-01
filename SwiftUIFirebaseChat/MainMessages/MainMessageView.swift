@@ -169,9 +169,11 @@ struct MainMessageView: View {
         }
     }
     
+    @State var shouldShowNewMessageScreen = false
+    
     private var newMessageButton: some View{
         Button{
-            
+            shouldShowNewMessageScreen.toggle()
         }label:{
             HStack{
                 Spacer()
@@ -187,7 +189,13 @@ struct MainMessageView: View {
                 .shadow(radius: 15)
                 .padding(.horizontal)
         }
+        
+        .fullScreenCover(isPresented: $shouldShowNewMessageScreen){
+            CreateNewMessageView()
+        }
     }
+    
+    
 }
 
 struct MainMessageView_Previews: PreviewProvider {
