@@ -6,19 +6,90 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
+
+
+class MainMessagesViewModel: ObservableObject {
+    
+    @Published var errorMessage = ""
+    @Published var chatUser: ChatUser?
+    
+    init(){
+        
+        DispatchQueue.main.async {
+            self.isUserCurrentlyLoggedOut = FirebaseManager.shared.auth.currentUser?.uid == nil
+        }
+        
+        
+        fetchCurrentUser()
+    }
+    
+    func fetchCurrentUser(){
+        
+        guard let uid =  FirebaseManager.shared.auth.currentUser?.uid else {
+            
+            self.errorMessage = "could not find firebase uid"
+            return}
+        
+        FirebaseManager.shared.firestore.collection("users").document(uid).getDocument {
+            snapshot, error in
+            if let error = error {
+                self.errorMessage = "failed to fetch current user: \(error)"
+                print("failed to fetch current user:", error)
+                return
+            }
+            
+            guard let data = snapshot?.data() else {
+                self.errorMessage = "no data found"
+                return}
+            
+            self.chatUser = .init(data: data)
+           
+        }
+        
+    }
+    
+    @Published var isUserCurrentlyLoggedOut = false
+    
+    func handleSignOut(){
+        isUserCurrentlyLoggedOut.toggle()
+        try? FirebaseManager.shared.auth.signOut()
+    }
+}
+
 
 struct MainMessageView: View {
     
     @State var shouldShowLogoutOptions = false
     
+    @ObservedObject private var vm = MainMessagesViewModel()
+    
+    var body: some View {
+        NavigationView{
+           
+            VStack{
+                
+                
+                customNavBar
+                messageView
+            }
+            .overlay( newMessageButton, alignment: .bottom)
+            .navigationBarHidden(true)
+            
+            .navigationTitle("title")
+        }
+    }
+    
+    
     private var customNavBar: some View{
         HStack(spacing: 16){
             
-            Image(systemName: "person.fill")
-                .font(.system(size: 34, weight: .heavy))
+            WebImage(url: URL(string: vm.chatUser?.profileImageUrl ?? "")).resizable().scaledToFill().frame(width: 50, height: 50).clipped().cornerRadius(50) .overlay(RoundedRectangle(cornerRadius: 44).stroke(Color(.label), lineWidth: 1)
+            ).shadow(radius: 5)
             
             VStack(alignment: .leading, spacing: 4){
-                Text("USEERNAME")
+                let email = vm.chatUser?.email.replacingOccurrences(of: "@gmail.com", with: "") ?? ""
+                Text(email)
                     .font(.system(size: 24, weight: .bold))
                    
                 HStack{
@@ -47,26 +118,20 @@ struct MainMessageView: View {
             .init(title: Text("settings"), message: Text("what do you want to do ? "), buttons: [
                 .destructive(Text("sign out"), action: {
                     print("handle sign out")
+                    vm.handleSignOut()
                 }),
                 .cancel()
             ])
         }
-    }
-    
-    var body: some View {
-        NavigationView{
-           
-            VStack{
-                customNavBar
-                messageView
-            }
-            .overlay( newMessageButton, alignment: .bottom)
-            .navigationBarHidden(true)
-            
-            .navigationTitle("title")
+        .fullScreenCover(isPresented: $vm.isUserCurrentlyLoggedOut, onDismiss: nil){
+            LoginView(didCompleteLoginProcess: {
+                self.vm.isUserCurrentlyLoggedOut = false
+                self.vm.fetchCurrentUser()
+            })
         }
     }
     
+   
     private var messageView: some View{
         ScrollView{
             ForEach(0..<10, id: \.self){ num in

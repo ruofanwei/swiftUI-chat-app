@@ -10,32 +10,17 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 
-class FirebaseManager: NSObject{
-    
-    let auth: Auth
-    let storage: Storage
-    let firestore: Firestore
-    
-    static let shared = FirebaseManager()
-    
-    override init(){
-        FirebaseApp.configure()
-        
-        self.auth = Auth.auth()
-        self.storage = Storage.storage()
-        self.firestore = Firestore.firestore()
-        
-        super.init()
-    }
-}
+
 
 struct LoginView: View {
     
-    @State var isLoginMode = false
-    @State var email = ""
-    @State var password = ""
+    let didCompleteLoginProcess: () -> ()
     
-    @State var shouldShowImagePicker = false
+    @State private var isLoginMode = false
+    @State private var email = ""
+    @State private var password = ""
+    
+    @State private var shouldShowImagePicker = false
     @State var image: UIImage?
     
     var body: some View {
@@ -141,12 +126,20 @@ struct LoginView: View {
             print("successfully login user: \(result?.user.uid ?? "")")
             
             self.loginStatusMessage = "successfully login user: \(result?.user.uid ?? "")"
+            
+            self.didCompleteLoginProcess()
         }
     }
     
     @State var loginStatusMessage = ""
     
     private func createNewAccount() {
+        
+        if self.image == nil {
+            self.loginStatusMessage = "you must select an avatar image"
+            return
+        }
+        
         FirebaseManager.shared.auth.createUser(withEmail: email, password: password) {
             result, err in
             if let err = err {
@@ -202,12 +195,16 @@ struct LoginView: View {
                     return
                 }
                 print("success")
+                
+                self.didCompleteLoginProcess()
             }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(didCompleteLoginProcess: {
+            
+        })
     }
 }
