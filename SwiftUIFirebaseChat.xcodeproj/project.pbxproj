@@ -11,6 +11,7 @@
 		33377B7727A8C5890098967B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33377B7627A8C5890098967B /* LoginView.swift */; };
 		33377B7927A8C58B0098967B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33377B7827A8C58B0098967B /* Assets.xcassets */; };
 		33377B7C27A8C58B0098967B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33377B7B27A8C58B0098967B /* Preview Assets.xcassets */; };
+		337CE42927A9070A00E73815 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337CE42827A9070A00E73815 /* ImagePicker.swift */; };
 		338D720E27A8DC6400536633 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 338D720D27A8DC6400536633 /* FirebaseAuth */; };
 		338D721027A8DC6400536633 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 338D720F27A8DC6400536633 /* FirebaseStorage */; };
 		33BF354A27A8DF8300B14DAF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 33BF354927A8DF8300B14DAF /* GoogleService-Info.plist */; };
@@ -22,6 +23,7 @@
 		33377B7627A8C5890098967B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		33377B7827A8C58B0098967B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		33377B7B27A8C58B0098967B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		337CE42827A9070A00E73815 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		33BF354927A8DF8300B14DAF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +63,7 @@
 				33377B7627A8C5890098967B /* LoginView.swift */,
 				33BF354927A8DF8300B14DAF /* GoogleService-Info.plist */,
 				33377B7827A8C58B0098967B /* Assets.xcassets */,
+				337CE42827A9070A00E73815 /* ImagePicker.swift */,
 				33377B7A27A8C58B0098967B /* Preview Content */,
 			);
 			path = SwiftUIFirebaseChat;
@@ -152,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337CE42927A9070A00E73815 /* ImagePicker.swift in Sources */,
 				33377B7727A8C5890098967B /* LoginView.swift in Sources */,
 				33377B7527A8C5890098967B /* SwiftUIFirebaseChatApp.swift in Sources */,
 			);
