@@ -6,6 +6,22 @@
 //
 
 import SwiftUI
+import Firebase
+
+class FirebaseManager: NSObject{
+    
+    let auth: Auth
+    
+    static let shared = FirebaseManager()
+    
+    override init(){
+        FirebaseApp.configure()
+        
+        self.auth = Auth.auth()
+        
+        super.init()
+    }
+}
 
 struct LoginView: View {
     
@@ -57,6 +73,8 @@ struct LoginView: View {
                         }.background(Color.blue)
                     }
                     
+                    Text(self.loginStatusMessage).foregroundColor(.red)
+                    
                 }
                 .padding()
                 }
@@ -66,13 +84,47 @@ struct LoginView: View {
                                 .ignoresSafeArea())
         }
         
+        .navigationViewStyle(StackNavigationViewStyle())
+        
     }
     
     private func handleAction(){
         if isLoginMode {
-            print("log in to firebase")
+            loginUser()
         }else{
-            print("create a new account")
+            createNewAccount()
+        }
+    }
+    
+    private func loginUser(){
+        FirebaseManager.shared.auth.signIn(withEmail: email, password: password){
+            result, err in
+            if let err = err {
+                print("Failed to logi user:", err)
+                self.loginStatusMessage = "Failed to login user: \(err)"
+                return
+            }
+            
+            print("successfully login user: \(result?.user.uid ?? "")")
+            
+            self.loginStatusMessage = "successfully login user: \(result?.user.uid ?? "")"
+        }
+    }
+    
+    @State var loginStatusMessage = ""
+    
+    private func createNewAccount() {
+        FirebaseManager.shared.auth.createUser(withEmail: email, password: password) {
+            result, err in
+            if let err = err {
+                print("Failed to create user:", err)
+                self.loginStatusMessage = "Failed to create user: \(err)"
+                return
+            }
+            
+            print("successfully created user: \(result?.user.uid ?? "")")
+            
+            self.loginStatusMessage = "successfully create user: \(result?.user.uid ?? "")"
         }
     }
 }
