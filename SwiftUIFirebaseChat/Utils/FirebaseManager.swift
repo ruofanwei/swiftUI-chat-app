@@ -11,15 +11,17 @@ import FirebaseFirestore
 import FirebaseStorage
 
 
-class FirebaseManager: NSObject{
+class FirebaseManager: NSObject {
     
     let auth: Auth
     let storage: Storage
     let firestore: Firestore
     
+    var currentUser: ChatUser?
+    
     static let shared = FirebaseManager()
     
-    override init(){
+    override init() {
         FirebaseApp.configure()
         
         self.auth = Auth.auth()
@@ -28,4 +30,6 @@ class FirebaseManager: NSObject{
         
         super.init()
     }
+    
 }
+
