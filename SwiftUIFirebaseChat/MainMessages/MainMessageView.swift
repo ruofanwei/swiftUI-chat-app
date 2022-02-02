@@ -215,23 +215,13 @@ struct MainMessageView: View {
     
 }
 
-struct ChatLogView: View {
-    
-    let chatUser: ChatUser?
-    
-    var body: some View {
-        ScrollView{
-            ForEach(0..<10){num in
-                Text("fake message")
-            }
-        }.navigationTitle(chatUser?.email ?? "")
-            .navigationBarTitleDisplayMode(.inline)
-    }
-}
+
 
 struct MainMessageView_Previews: PreviewProvider {
     static var previews: some View {
         MainMessageView()
             .preferredColorScheme(.dark)
+        
+        MainMessageView()
     }
 }
