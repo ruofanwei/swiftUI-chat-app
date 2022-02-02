@@ -176,7 +176,7 @@ struct MainMessagesView: View {
         .actionSheet(isPresented: $shouldShowLogOutOptions) {
             .init(title: Text("Settings"), message: Text("What do you want to do?"), buttons: [
                 .destructive(Text("Sign Out"), action: {
-                    print("handle sign out")
+               
                     vm.handleSignOut()
                 }),
                     .cancel()
@@ -263,7 +263,7 @@ struct MainMessagesView: View {
         }
         .fullScreenCover(isPresented: $shouldShowNewMessageScreen) {
             CreateNewMessageView(didSelectNewUser: { user in
-                print(user.email)
+                
                 self.shouldNavigateToChatLogView.toggle()
                 self.chatUser = user
                 self.chatLogViewModel.chatUser = user

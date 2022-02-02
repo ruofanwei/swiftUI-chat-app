@@ -50,7 +50,7 @@ class ChatLogViewModel: ObservableObject {
                         do {
                             if let cm = try change.document.data(as: ChatMessage.self) {
                                 self.chatMessages.append(cm)
-                                print("Appending chatMessage in ChatLogView: \(Date())")
+                                
                             }
                         } catch {
                             print("Failed to decode message: \(error)")
@@ -65,7 +65,7 @@ class ChatLogViewModel: ObservableObject {
     }
     
     func handleSend() {
-        print(chatText)
+        
         guard let fromId = FirebaseManager.shared.auth.currentUser?.uid else { return }
         
         guard let toId = chatUser?.uid else { return }
@@ -84,7 +84,7 @@ class ChatLogViewModel: ObservableObject {
                 return
             }
             
-            print("Successfully saved current user sending message")
+            
             
             self.persistRecentMessage()
             
@@ -104,7 +104,7 @@ class ChatLogViewModel: ObservableObject {
                 return
             }
             
-            print("Recipient saved message as well")
+           
         }
     }
     

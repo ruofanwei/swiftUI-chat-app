@@ -123,7 +123,6 @@ struct LoginView: View {
                 return
             }
             
-            print("successfully login user: \(result?.user.uid ?? "")")
             
             self.loginStatusMessage = "successfully login user: \(result?.user.uid ?? "")"
             
@@ -148,7 +147,7 @@ struct LoginView: View {
                 return
             }
             
-            print("successfully created user: \(result?.user.uid ?? "")")
+            
             
             self.loginStatusMessage = "successfully create user: \(result?.user.uid ?? "")"
             
@@ -175,7 +174,7 @@ struct LoginView: View {
                     return
                 }
                 self.loginStatusMessage = "successfully stored image with url: \(url?.absoluteString ?? "")"
-                print (url?.absoluteString)
+                
                 
                 guard let url = url else {return}
                 self.storeUserInfomation(imageProfileUrl: url)
@@ -194,7 +193,7 @@ struct LoginView: View {
                     self.loginStatusMessage = "\(err)"
                     return
                 }
-                print("success")
+                
                 
                 self.didCompleteLoginProcess()
             }
