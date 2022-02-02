@@ -15,3 +15,9 @@ struct SwiftUIFirebaseChatApp: App {
         }
     }
 }
+
+struct Previews_SwiftUIFirebaseChatApp_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}
