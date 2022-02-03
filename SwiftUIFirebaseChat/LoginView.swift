@@ -124,7 +124,7 @@ struct LoginView: View {
             }
             
             
-            self.loginStatusMessage = "successfully login user: \(result?.user.uid ?? "")"
+            
             
             self.didCompleteLoginProcess()
         }
@@ -149,8 +149,7 @@ struct LoginView: View {
             
             
             
-            self.loginStatusMessage = "successfully create user: \(result?.user.uid ?? "")"
-            
+           
             self.persistImageToStorage()
         }
     }
@@ -173,7 +172,7 @@ struct LoginView: View {
                     self.loginStatusMessage = "Failed to retrive downloadURL: \(err)"
                     return
                 }
-                self.loginStatusMessage = "successfully stored image with url: \(url?.absoluteString ?? "")"
+               
                 
                 
                 guard let url = url else {return}
